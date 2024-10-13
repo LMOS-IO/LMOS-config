@@ -1,5 +1,5 @@
 internal_configuration: # Defines configs for interal assets that support services
-  redis: # 
+  redis: # configuration of redis asset
     redis_url: your-redis-url
 services:
   llm_runner: # Defining all llm_runner services on the network
