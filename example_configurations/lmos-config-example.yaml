@@ -1,6 +1,10 @@
 internal_configuration: # Defines configs for interal assets that support services
   redis: # configuration of redis asset
     redis_url: your-redis-url
+
+  prometheus:
+    # to be added
+
 services:
   llm_runner: # Defining all llm_runner services on the network
     - name: llama-3.1-70b # config for a single llm_runner container
