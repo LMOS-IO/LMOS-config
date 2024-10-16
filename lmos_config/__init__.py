@@ -1,4 +1,4 @@
-from ConfigTypes import LMOSBaseConfigModel
+from .ConfigTypes import LMOSBaseConfigModel
 
 __all__ = [
     "config",
