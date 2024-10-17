@@ -7,11 +7,10 @@ requires = [
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools]
-packages = ["lmos_config"]
-packages = ["setuptools.find_packages"]
+packages = ["find:"]
 
 [tool.setuptools.packages.find]
-where = ["."]
+where = ["lmos_config"]
 
 [project]
 name = "LMOS-config"
