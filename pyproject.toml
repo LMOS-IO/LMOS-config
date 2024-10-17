@@ -1,22 +1,18 @@
-[build-system]
-requires = [
-    "packaging",
-    "setuptools",
-    "wheel",
-]
-build-backend = "setuptools.build_meta"
-
 [project]
 name = "LMOS-config"
 version = "0.1.0"
 description = "Configuration management for LMOS."
 requires-python = ">=3.8"
 dependencies = [
-    "pydantic >= 2.0",
+    "pydantic >=2.0",
 ]
-
-[tool.setuptools.packages.find]
-where = ["lmos_config"]
 
 [project.urls]
 "Homepage" = "https://github.com/LMOS-IO/lmos-config"
+
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["lmos_config"]
