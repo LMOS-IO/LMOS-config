@@ -9,7 +9,8 @@ class ConfigManager:
     _config: LMOSBaseConfigModel
 
     def __init__(self):
-        self._config = LMOSBaseConfigModel()  # Initialize the config here if needed
+        pass
+        # self._config = LMOSBaseConfigModel()  # Initialize the config here if needed
 
     @property
     def config(self):

@@ -9,6 +9,12 @@ build-backend = "setuptools.build_meta"
 [tool.setuptools]
 packages = ["lmos_config"]
 
+[tool.setuptools]
+packages = ["setuptools.find_packages"]
+
+[tool.setuptools.packages.find]
+where = ["."]
+
 [project]
 name = "LMOS-config"
 version = "0.1.0"
