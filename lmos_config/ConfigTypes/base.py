@@ -16,6 +16,13 @@ class PrometheusConfig(BaseModel):
     log_level: str = Field('info', description="Logging level for Prometheus, e.g., 'info', 'debug', 'error'")
     endpoint: Optional[AnyUrl] = Field(None, description="Optional endpoint URL for Prometheus logging")
 
+class RelationalDatabaseConfig(BaseModel):
+    """
+    Database Configuration. This tells LMOS how to connect to your relationdatabase.
+    [Engine Configuration](https://docs.sqlalchemy.org/en/20/core/engines.html)
+    """
+    database_url: AnyUrl = Field(..., description="Database Connection URL. This should be any sqlalchemy support url or similar")
+
 class InternalConfiguration(BaseModel):
     """
     Config for services LMOS depends on.
