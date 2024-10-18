@@ -2,6 +2,7 @@
 
 from typing import Optional
 from pydantic import BaseModel, Field
+from pydantic.json_schema import SkipJsonSchema
 from pydantic_settings import BaseSettings
 
 __all__ = [
@@ -17,6 +18,8 @@ class S3BucketConfiguration(BaseModel):
 
 
 class PreConfigConfigurationOptions(BaseSettings):
+    PRELOAD_CONFIG: SkipJsonSchema[bool] = Field(True, description="**internal** attribute to skip the loading of a json schema")
+
     http_url: Optional[str] = Field(
         None, description="HTTP(s) URL to load the configuration from"
     )
