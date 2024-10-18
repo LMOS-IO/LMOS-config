@@ -39,7 +39,7 @@ jobs:
           mv schema.json docs/schema.json
           git add -f docs/schema.json
           git commit -m "Update schema.json" || echo "No changes to commit"
-          git push -f "https://${GITHUB_TOKEN}@github.com/${{ github.repository }}.git" gh-pages
+          git push -f origin  gh-pages
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
