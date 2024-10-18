@@ -34,12 +34,12 @@ jobs:
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git checkout -b gh-pages
+          git checkout gh-pages || git checkout -b gh-pages
           mkdir -p docs
           mv schema.json docs/schema.json
           git add -f docs/schema.json
-          git commit -m "Update schema.json"
-          git push -f origin gh-pages
+          git commit -m "Update schema.json" || echo "No changes to commit"
+          git push -f "https://${GITHUB_TOKEN}@github.com/${{ github.repository }}.git" gh-pages
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
