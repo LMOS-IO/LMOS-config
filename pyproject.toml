@@ -5,8 +5,8 @@ description = "Configuration management for LMOS."
 requires-python = ">=3.8"
 dependencies = [
     "pydantic >=2.0",
-    "pyyaml >=6.0",
     "pydantic-settings",
+    "ruamel.yaml >=0.18.0",
 ]
 
 [project.urls]
