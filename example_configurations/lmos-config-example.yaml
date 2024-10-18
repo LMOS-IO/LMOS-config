@@ -1,3 +1,9 @@
+# This is an example config file for LMOS
+# It can either be modified for your application
+# or used as a schema guide when writing your own
+
+# yaml-language-server: $schema=https://lmos-io.github.io/LMOS-config/schema.json
+
 internal_configuration: # Defines configs for interal assets that support services
   redis: # configuration of redis asset
     redis_url: redis://localhost:6379
