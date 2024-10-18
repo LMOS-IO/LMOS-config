@@ -6,6 +6,12 @@ from pydantic_settings import BaseSettings
 
 # Function to load and parse the YAML configuration file
 def load_local_yaml_config(config_file_path):
+    """
+    Loads the yaml from the local file system
+    
+    :param config_file_path: Path to the YAML configuration file
+    :return: The config as a LMOSBaseConfigModel object
+    """
     try:
         # Open and read the YAML config file
         
@@ -19,3 +25,4 @@ def load_local_yaml_config(config_file_path):
         return LMOSBaseConfigModel(**config_data)
     except Exception as e:
         raise ValueError(f"Error validating configuration data from {config_file_path}: {e}")
+    

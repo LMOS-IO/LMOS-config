@@ -7,6 +7,7 @@ dependencies = [
     "pydantic >=2.0",
     "pydantic-settings",
     "ruamel.yaml >=0.18.0",
+    "aiohttp"
 ]
 
 [project.urls]
