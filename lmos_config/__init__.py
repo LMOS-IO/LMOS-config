@@ -1,6 +1,6 @@
 from lmos_config._pre_config import PreConfigOptions
 from lmos_config.ConfigLoader.http_config import load_http_config
-from lmos_config.ConfigLoader.local_yaml import load_local_yaml_config
+from lmos_config.ConfigLoader.local_config import load_local_yaml_config
 from lmos_config.ConfigTypes import LMOSBaseConfigModel
 
 __all__ = [
