@@ -8,6 +8,9 @@ internal_configuration: # Defines configs for interal assets that support servic
   redis: # configuration of redis asset
     redis_url: redis://localhost:6379
 
+  database:
+    database_url: postgresql://postgres:postgres@localhost:5432/postgres
+
   prometheus:
     # to be added
 

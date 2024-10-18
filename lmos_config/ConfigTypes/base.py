@@ -28,7 +28,8 @@ class InternalConfiguration(BaseModel):
     Config for services LMOS depends on.
     """
     redis: RedisConfig = Field(..., description="Redis Connection Configuration")
-    prometheus: Optional[PrometheusConfig] = Field(None, description="Optional Prometheus Logging Configuration")  # Prometheus config can be added later
+    prometheus: Optional[PrometheusConfig] = Field(None, description="Optional Prometheus Logging Configuration")
+    database: RelationalDatabaseConfig = Field(..., description="Database Connection Configuration")
 
 # Define the generic model for services
 class GenericServiceConfig(BaseModel):
