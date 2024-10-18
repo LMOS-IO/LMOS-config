@@ -2,6 +2,8 @@ import os
 import yaml
 from .ConfigTypes import LMOSBaseConfigModel
 
+from _pre_config import PreConfigOptions
+
 __all__ = [
     "config",
 ]
