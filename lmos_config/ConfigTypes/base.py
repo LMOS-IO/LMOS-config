@@ -1,27 +1,27 @@
 from typing import List, Optional
-from pydantic import BaseModel, AnyUrl, Field
+from pydantic import BaseModel, AnyUrl, ConfigDict, Field
 
 # Define the model for the internal configuration assets
 class RedisConfig(BaseModel):
     """
-    Configuration for Redis asset.
+    Redis Configuration. This tells LMOS how to connect to your redis instance.
     """
-    redis_url: AnyUrl = Field(..., description="URL for Redis configuration")
+    redis_url: AnyUrl = Field(..., description="Redis Connection URL. This Should start with `redis://`")
 
 class PrometheusConfig(BaseModel):
     """
     Configuration for Prometheus logging.
     """
-    logging_enabled: bool = Field(..., description="Flag to enable or disable Prometheus logging")
-    log_level: str = Field(..., description="Logging level for Prometheus, e.g., 'info', 'debug', 'error'")
+    logging_enabled: bool = Field(False, description="Flag to enable or disable Prometheus logging")
+    log_level: str = Field('info', description="Logging level for Prometheus, e.g., 'info', 'debug', 'error'")
     endpoint: Optional[AnyUrl] = Field(None, description="Optional endpoint URL for Prometheus logging")
 
 class InternalConfiguration(BaseModel):
     """
-    Internal configuration for various assets.
+    Config for services LMOS depends on.
     """
-    redis: RedisConfig = Field(..., description="Redis configuration")
-    prometheus: Optional[PrometheusConfig] = Field(None, description="Prometheus configuration, optional")  # Prometheus config can be added later
+    redis: RedisConfig = Field(..., description="Redis Connection Configuration")
+    prometheus: Optional[PrometheusConfig] = Field(None, description="Optional Prometheus Logging Configuration")  # Prometheus config can be added later
 
 # Define the generic model for services
 class GenericServiceConfig(BaseModel):
@@ -63,15 +63,24 @@ class Services(BaseModel):
     """
     Configuration for all services.
     """
-    llm_runner: List[LLMRunnerConfig] = Field(..., description="List of LLM runner services")
-    stt_runner: List[STTRunnerConfig] = Field(..., description="List of STT runner services")
-    tts_runner: List[TTSRunnerConfig] = Field(..., description="List of TTS runner services")
-    rerank_runner: List[ReRankRunnerConfig] = Field(..., description="List of reranking services")
+    llm_runner: Optional[List[LLMRunnerConfig]] = Field(..., description="List of LLM runner services")
+    stt_runner: Optional[List[STTRunnerConfig]] = Field(..., description="List of STT runner services")
+    tts_runner: Optional[List[TTSRunnerConfig]] = Field(..., description="List of TTS runner services")
+    rerank_runner: Optional[List[ReRankRunnerConfig]] = Field(..., description="List of reranking services")
 
 # Define the main configuration model
 class LMOSBaseConfigModel(BaseModel):
     """
-    Main configuration model that includes internal assets and services.
+    The global config for the entire LMOS system. 
+    
+    This file is mapped provided to all containers on boot,
+    and is used to configure all aspects of the system.
+
+    The InferRoute config is automatically derived from the services config.
     """
     internal_configuration: InternalConfiguration = Field(..., description="Internal configuration for assets")
     services: Services = Field(..., description="Service configurations")
+
+    model_config = ConfigDict(
+        title="Global LMOS Config",
+    )
