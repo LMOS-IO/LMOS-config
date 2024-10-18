@@ -43,6 +43,18 @@ class GenericServiceConfig(BaseModel):
     endpoint: Optional[AnyUrl] = Field(None, description="Optional endpoint URL for the service")
     api_key: Optional[str] = Field(None, description="Optional API key for the service")
 
+class RouterConfig(BaseModel):
+    """
+    Configuration for the LMOS Router which delgates requests to the approitate service.
+
+    `log_request_dump_volume_thresh` and `log_request_dump_time_thresh` are used to determine when to insert usage logs into the RDB.
+    LMOS Router will queue usage logs internally to prevent delays in the request response cycle.
+
+    It is recommended that you set the `log_request_dump_volume_thresh` such that it frequently triggers prior to reaching the the time limit specified by `log_request_dump_time_thresh`.
+    """
+    log_request_dump_volume_thresh: int = Field(1000, description="In number of entries: Threshold for worker to insert usage logs into RDB")
+    log_request_dump_time_thresh: int = Field(1000, description="In Seconds: Threshold for max time between worker inserting into RDB")
+
 # Define specific service configurations that can inherit from GenericServiceConfig
 class LLMRunnerConfig(GenericServiceConfig):
     """
