@@ -33,6 +33,7 @@ class GenericServiceConfig(BaseModel):
     alias: List[str] = Field(default_factory=list, description="List of aliases for the service")
     type: Optional[str] = Field(None, description="Type of backend for the service, optional")  # Some services have a "type" field
     endpoint: Optional[AnyUrl] = Field(None, description="Optional endpoint URL for the service")
+    api_key: Optional[str] = Field(None, description="Optional API key for the service")
 
 # Define specific service configurations that can inherit from GenericServiceConfig
 class LLMRunnerConfig(GenericServiceConfig):
