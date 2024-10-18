@@ -1,0 +1,34 @@
+"""This document exports a variable called `PreConfigOptions` that will expose locations to load a config file pulled from environment variables"""
+
+from typing import Optional
+from pydantic import BaseModel, Field
+from pydantic_settings import BaseSettings
+
+__all__ = [
+    "PreConfigOptions",
+]
+
+
+class S3BucketConfiguration(BaseModel):
+    name: str = Field(..., description="Name of the S3 bucket")
+    access_key: Optional[str] = Field(None, description="Access key for S3 bucket")
+    secret_key: Optional[str] = Field(None, description="Secret key for S3 bucket")
+    region: Optional[str] = Field(None, description="AWS region for the S3 bucket")
+
+
+class PreConfigConfigurationOptions(BaseSettings):
+    http_url: Optional[str] = Field(
+        None, description="HTTP(s) URL to load the configuration from"
+    )
+    yaml_path: Optional[str] = Field(
+        None, description="Path to the YAML configuration file"
+    )
+    s3_bucket: Optional[S3BucketConfiguration] = Field(
+        None, description="S3 bucket configuration"
+    )
+
+    class Config:
+        env_prefix = "LMOS_CONFIG_"
+
+
+PreConfigOptions = PreConfigConfigurationOptions()

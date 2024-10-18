@@ -5,6 +5,7 @@ description = "Configuration management for LMOS."
 requires-python = ">=3.8"
 dependencies = [
     "pydantic >=2.0",
+    "pydantic-settings",
 ]
 
 [project.urls]
