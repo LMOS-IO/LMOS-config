@@ -84,6 +84,7 @@ class Services(BaseModel):
     """
     Configuration for all services.
     """
+    router: RouterConfig = Field(..., description="Configuration for the LMOS Router")
     llm_runner: Optional[List[LLMRunnerConfig]] = Field(..., description="List of LLM runner services")
     stt_runner: Optional[List[STTRunnerConfig]] = Field(..., description="List of STT runner services")
     tts_runner: Optional[List[TTSRunnerConfig]] = Field(..., description="List of TTS runner services")
