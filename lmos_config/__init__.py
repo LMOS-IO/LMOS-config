@@ -1,4 +1,3 @@
-import os
 from _pre_config import PreConfigOptions
 from lmos_config.ConfigLoader.local_config import load_local_yaml_config
 from lmos_config.ConfigLoader.http_config import load_http_config
@@ -12,7 +11,7 @@ config: LMOSBaseConfigModel
 
 try:
     if PreConfigOptions.http_url:
-        load_http_config(PreConfigOptions.http_url)
+        config = load_http_config(PreConfigOptions.http_url)
     elif PreConfigOptions.s3_bucket:
         raise NotImplementedError("S3 config loading is not implemented yet")
     else:
