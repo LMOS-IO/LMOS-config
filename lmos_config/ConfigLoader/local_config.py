@@ -5,7 +5,7 @@ from pydantic import BaseModel, Field
 from pydantic_settings import BaseSettings
 
 # Function to load and parse the YAML configuration file
-def load_local_yaml_config(config_file_path):
+async def load_local_yaml_config(config_file_path):
     """
     Loads the yaml from the local file system
     

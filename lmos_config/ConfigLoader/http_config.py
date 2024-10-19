@@ -1,6 +1,5 @@
-import aiohttp
-import asyncio
 import json
+import aiohttp
 from ruamel.yaml import YAML
 from lmos_config.ConfigTypes import LMOSBaseConfigModel
 
@@ -10,7 +9,7 @@ async def _get_asset(url: str):
             file_str = await response.text()
             return file_str
         
-def _load_raw_config(url, asset_str):
+async def _load_raw_config(url, asset_str):
     if url.endswith('.json'):
         raw_config = json.loads(asset_str)
     elif url.endswith('.yaml') or url.endswith('.yml'):
@@ -20,20 +19,15 @@ def _load_raw_config(url, asset_str):
         raise ValueError(f'Unsupported config file type found at: {url}')
     return raw_config
 
-def load_http_config(url):
+async def load_http_config(url):
     """
     Loads the config from a http endpoints. Can be either json or yaml/yml
     
     :param url: The url to load the config from
     :return: The config as a LMOSBaseConfigModel object
     """
-    try:
-        loop = asyncio.get_running_loop()
-        file_str = loop.run_until_complete(_get_asset(url))
-    except RuntimeError:
-        file_str = asyncio.run(_get_asset(url))
-
-    raw_config = _load_raw_config(url, file_str)
+    file_str = await _get_asset(url)
+    raw_config = await _load_raw_config(url, file_str)
     try:
         return LMOSBaseConfigModel(**raw_config)
     except Exception as e:
