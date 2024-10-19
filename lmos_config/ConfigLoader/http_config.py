@@ -27,7 +27,12 @@ def load_http_config(url):
     :param url: The url to load the config from
     :return: The config as a LMOSBaseConfigModel object
     """
-    file_str = asyncio.run(_get_asset(url))
+    try:
+        loop = asyncio.get_running_loop()
+        file_str = loop.run_until_complete(_get_asset(url))
+    except RuntimeError:
+        file_str = asyncio.run(_get_asset(url))
+
     raw_config = _load_raw_config(url, file_str)
     try:
         return LMOSBaseConfigModel(**raw_config)
