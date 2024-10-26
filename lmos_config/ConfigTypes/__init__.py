@@ -1,1 +1,1 @@
-from ConfigTypes.base import *
+from .base import *
