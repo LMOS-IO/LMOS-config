@@ -18,10 +18,10 @@ class PrometheusConfig(BaseModel):
 
 class RelationalDatabaseConfig(BaseModel):
     """
-    Database Configuration. This tells LMOS how to connect to your relationdatabase.
+    Database Configuration. This tells LMOS how to connect to your relational database.
     [Engine Configuration](https://docs.sqlalchemy.org/en/20/core/engines.html)
     """
-    database_url: AnyUrl = Field(..., description="Database Connection URL. This should be any sqlalchemy support url or similar")
+    database_url: AnyUrl = Field(..., description="Database Connection URL. This should be any SQLAlchemy support url or similar")
 
 class InternalConfiguration(BaseModel):
     """
@@ -45,7 +45,7 @@ class GenericServiceConfig(BaseModel):
 
 class RouterConfig(BaseModel):
     """
-    Configuration for the LMOS Router which delgates requests to the approitate service.
+    Configuration for the LMOS Router which delegates requests to the appropriate service.
 
     `log_request_dump_max_queue_size` and `log_request_dump_queue_timeout` are used to determine when to insert usage logs into the RDB.
     LMOS Router will queue usage logs internally to prevent delays in the request response cycle.
@@ -76,7 +76,7 @@ class TTSRunnerConfig(GenericServiceConfig):
 
 class ReRankRunnerConfig(GenericServiceConfig):
     """
-    Configuration for reranking services.
+    Configuration for re-ranker services.
     """
     pass
 
@@ -88,7 +88,7 @@ class Services(BaseModel):
     llm_runner: Optional[List[LLMRunnerConfig]] = Field(..., description="List of LLM runner services")
     stt_runner: Optional[List[STTRunnerConfig]] = Field(..., description="List of STT runner services")
     tts_runner: Optional[List[TTSRunnerConfig]] = Field(..., description="List of TTS runner services")
-    rerank_runner: Optional[List[ReRankRunnerConfig]] = Field(..., description="List of reranking services")
+    rerank_runner: Optional[List[ReRankRunnerConfig]] = Field(..., description="List of re-ranker services")
 
 # Define the main configuration model
 class LMOSBaseConfigModel(BaseModel):

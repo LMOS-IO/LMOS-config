@@ -18,7 +18,7 @@ LMOS-Config provides a unified configuration system for the entire LMOS ecosyste
 ## Usage
 
 ### Basic Configuration
-Add the schema reference to your YAML config file:
+Add the schema reference to your YAML config file to enable auto complete:
 ```yaml
 # yaml-language-server: $schema=https://lmos-io.github.io/LMOS-config/schema.json
 
