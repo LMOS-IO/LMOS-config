@@ -1,6 +1,9 @@
 from typing import List, Optional
 from pydantic import BaseModel, AnyUrl, ConfigDict, Field
 
+from .llm_runner import LLM_RUNNERS
+from .generic.service import ExternalService
+
 # Define the model for the internal configuration assets
 class RedisConfig(BaseModel):
     """
@@ -31,18 +34,6 @@ class InternalConfiguration(BaseModel):
     prometheus: Optional[PrometheusConfig] = Field(None, description="Optional Prometheus Logging Configuration")
     database: RelationalDatabaseConfig = Field(..., description="Database Connection Configuration")
 
-# Define the generic model for services
-class GenericServiceConfig(BaseModel):
-    """
-    Generic configuration for services.
-    """
-    name: str = Field(..., description="Name of the service")
-    location: str = Field(..., description="Path to the model folder or HF repository")
-    alias: List[str] = Field(default_factory=list, description="List of aliases for the service")
-    type: Optional[str] = Field(None, description="Type of backend for the service, optional")  # Some services have a "type" field
-    endpoint: Optional[AnyUrl] = Field(None, description="Optional endpoint URL for the service")
-    api_key: Optional[str] = Field(None, description="Optional API key for the service")
-
 class RouterConfig(BaseModel):
     """
     Configuration for the LMOS Router which delegates requests to the appropriate service.
@@ -56,25 +47,19 @@ class RouterConfig(BaseModel):
     log_request_dump_queue_timeout: int = Field(1000, description="In Seconds: The max time between worker inserting into RDB")
 
 # Define specific service configurations that can inherit from GenericServiceConfig
-class LLMRunnerConfig(GenericServiceConfig):
-    """
-    Configuration for LLM runner services.
-    """
-    pass
-
-class STTRunnerConfig(GenericServiceConfig):
+class STTRunnerConfig(ExternalService):
     """
     Configuration for STT runner services.
     """
     pass
 
-class TTSRunnerConfig(GenericServiceConfig):
+class TTSRunnerConfig(ExternalService):
     """
     Configuration for TTS runner services.
     """
     pass
 
-class ReRankRunnerConfig(GenericServiceConfig):
+class ReRankRunnerConfig(ExternalService):
     """
     Configuration for re-ranker services.
     """
@@ -85,10 +70,10 @@ class Services(BaseModel):
     Configuration for all services.
     """
     router: RouterConfig = Field(..., default_factory=lambda: RouterConfig(), description="Configuration for the LMOS Router")
-    llm_runner: Optional[List[LLMRunnerConfig]] = Field(..., description="List of LLM runner services")
-    stt_runner: Optional[List[STTRunnerConfig]] = Field(..., description="List of STT runner services")
-    tts_runner: Optional[List[TTSRunnerConfig]] = Field(..., description="List of TTS runner services")
-    rerank_runner: Optional[List[ReRankRunnerConfig]] = Field(..., description="List of re-ranker services")
+    llm_runner: List[LLM_RUNNERS] = Field(default_factory=list, description="List of LLM runner services")
+    stt_runner: List[STTRunnerConfig] = Field(default_factory=list, description="List of STT runner services")
+    tts_runner: List[TTSRunnerConfig] = Field(default_factory=list, description="List of TTS runner services")
+    rerank_runner: List[ReRankRunnerConfig] = Field(default_factory=list, description="List of re-ranker services")
 
 # Define the main configuration model
 class LMOSBaseConfigModel(BaseModel):
@@ -98,7 +83,7 @@ class LMOSBaseConfigModel(BaseModel):
     This file is mapped provided to all containers on boot,
     and is used to configure all aspects of the system.
 
-    The InferRoute config is automatically derived from the services config.
+    The Router config is automatically derived from the services config.
     """
     internal_configuration: InternalConfiguration = Field(..., description="Internal configuration for assets")
     services: Services = Field(..., description="Service configurations")

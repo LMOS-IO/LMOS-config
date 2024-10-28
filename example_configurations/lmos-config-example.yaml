@@ -4,7 +4,7 @@
 
 # yaml-language-server: $schema=https://lmos-io.github.io/LMOS-config/schema.json
 
-internal_configuration: # Defines configs for interal assets that support services
+internal_configuration: # Defines configs for internal assets that support services
   redis: # configuration of redis asset
     redis_url: redis://localhost:6379
 
@@ -14,7 +14,7 @@ internal_configuration: # Defines configs for interal assets that support servic
   prometheus:
     logging_enabled: True
     log_level: info
-    endpoint: http://YourPrometheusServer:yourport
+    endpoint: http://YourPrometheusServer:80
 
 services:
   router:
@@ -23,7 +23,7 @@ services:
 
   llm_runner: # Defining all llm_runner services on the network
     - name: llama-3.1-70b # config for a single llm_runner container
-      type: vllm # what infrence service is deploying the model
+      type: vllm # what inference service is deploying the model
       location: /your/path/to/model_folder # local file path or hf repo
       alias: # model name(s) that map to this model when the client makes a request
         - llama-3.1-70b
