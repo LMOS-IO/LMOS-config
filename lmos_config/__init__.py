@@ -13,7 +13,7 @@ class LMOSConfigManagerSingleton(LMOSBaseConfigModel):
     # def __init__(self) :
     #     pass
 
-    async def load_config_data(self) :
+    async def load_config_data(self):
         try:
             if PreConfigOptions.http_url:
                 config = await load_http_config(PreConfigOptions.http_url)
@@ -25,10 +25,13 @@ class LMOSConfigManagerSingleton(LMOSBaseConfigModel):
         except Exception as e:
             raise RuntimeError(f"Failed to load configuration: {e}. ")
 
-        assert isinstance(config, LMOSBaseConfigModel), "Config is not of type LMOSBaseConfigModel"
-        
+        assert isinstance(
+            config, LMOSBaseConfigModel
+        ), "Config is not of type LMOSBaseConfigModel"
+
         for field in config.model_fields:
             setattr(self, field, getattr(config, field))
+
 
 config = LMOSConfigManagerSingleton.model_construct()
 

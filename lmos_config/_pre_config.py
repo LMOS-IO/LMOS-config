@@ -18,7 +18,9 @@ class S3BucketConfiguration(BaseModel):
 
 
 class PreConfigConfigurationOptions(BaseSettings):
-    PRELOAD_CONFIG: SkipJsonSchema[bool] = Field(False, description="**internal** attribute to skip the loading of a json schema")
+    PRELOAD_CONFIG: SkipJsonSchema[bool] = Field(
+        False, description="**internal** attribute to skip the loading of a json schema"
+    )
 
     http_url: Optional[str] = Field(
         None, description="HTTP(s) URL to load the configuration from"
@@ -27,8 +29,7 @@ class PreConfigConfigurationOptions(BaseSettings):
         None, description="S3 bucket configuration"
     )
     yaml_path: Optional[str] = Field(
-        '/usr/src/app/config.yaml',
-        description="Path to the YAML configuration file"
+        "/usr/src/app/config.yaml", description="Path to the YAML configuration file"
     )
 
     class Config:
