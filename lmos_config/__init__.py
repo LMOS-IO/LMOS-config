@@ -36,4 +36,4 @@ class LMOSConfigManagerSingleton(LMOSBaseConfigModel):
 config = LMOSConfigManagerSingleton.model_construct()
 
 if PreConfigOptions.PRELOAD_CONFIG:
-    asyncio.run(config.load())
+    asyncio.run(config.load_config_data())

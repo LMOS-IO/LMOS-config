@@ -109,7 +109,6 @@ class Services(BaseModel):
     """
 
     router: RouterConfig = Field(
-        ...,
         default_factory=lambda: RouterConfig(),
         description="Configuration for the LMOS Router",
     )
