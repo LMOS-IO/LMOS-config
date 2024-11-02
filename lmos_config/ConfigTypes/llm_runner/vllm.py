@@ -1,11 +1,8 @@
 from typing import List, Optional, Literal
 from ..generic.service import InternalService
+from pydantic import BaseModel
 
-class vLLMRunner(InternalService):
-    """ExllamaV2 runner config"""
-
-    type: Literal["vllm"]
-
+class vLLMArgs(BaseModel):
     # chatGPT built this from the official docs
     # https://docs.vllm.ai/en/stable/serving/openai_compatible_server.html#command-line-arguments-for-the-server
     tokenizer: Optional[str] = None
@@ -113,3 +110,11 @@ class vLLMRunner(InternalService):
     disable_async_output_proc: Optional[bool] = None
     override_neuron_config: Optional[str] = None
     scheduling_policy: Optional[Literal["fcfs", "priority"]] = None
+
+
+
+class vLLMRunner(InternalService, vLLMArgs):
+    """ExllamaV2 runner config"""
+
+    type: Literal["vllm"]
+
