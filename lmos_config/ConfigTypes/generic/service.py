@@ -18,7 +18,7 @@ class InternalService(GenericServiceConfig):
     Config for internal services
     """
 
-    location: str = Field(..., description="Path to the model folder or HF repository")
+    location: str = Field(..., description="Path to the model folder or HF repository", serialization_alias="model", validation_alias="model")
 
 
 class ExternalService(GenericServiceConfig):

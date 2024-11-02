@@ -1,15 +1,11 @@
-from typing import Annotated, Literal, Union
+from typing import Annotated, Union
 
 from pydantic import Field
-from ..generic.service import InternalService, ExternalService
-
-
-class ExllamaV2Runner(InternalService):
-    """ExllamaV2 runner config"""
-
-    type: Literal["exl2"]
+from ..generic.service import ExternalService
+from .exllama import ExllamaV2Runner
+from .vllm import vLLMRunner
 
 
 LLM_RUNNERS = Annotated[
-    Union[ExllamaV2Runner, ExternalService], Field(discriminator="type")
+    Union[ExllamaV2Runner, vLLMRunner, ExternalService], Field(discriminator="type")
 ]
