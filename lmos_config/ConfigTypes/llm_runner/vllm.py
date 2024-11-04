@@ -1,6 +1,6 @@
 from typing import List, Optional, Literal
 from ..generic.service import InternalService
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 class vLLMArgs(BaseModel):
     # chatGPT built this from the official docs
@@ -111,10 +111,11 @@ class vLLMArgs(BaseModel):
     override_neuron_config: Optional[str] = None
     scheduling_policy: Optional[Literal["fcfs", "priority"]] = None
 
-
+    model_config  = ConfigDict(protected_namespaces=())
 
 class vLLMRunner(InternalService, vLLMArgs):
     """ExllamaV2 runner config"""
 
     type: Literal["vllm"]
+    _port: int = 8000
 

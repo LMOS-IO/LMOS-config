@@ -1,6 +1,7 @@
 from typing import List, Literal, Optional
-from pydantic import AnyUrl, BaseModel, Field
-
+from pydantic import AnyUrl, BaseModel, computed_field, Field
+from functools import cached_property
+import re
 
 class GenericServiceConfig(BaseModel):
     """
@@ -13,12 +14,20 @@ class GenericServiceConfig(BaseModel):
     )
 
 
+
 class InternalService(GenericServiceConfig):
     """
     Config for internal services
     """
 
     location: str = Field(..., description="Path to the model folder or HF repository", serialization_alias="model", validation_alias="model")
+
+    _port: int = 80
+    @computed_field # type: ignore[prop-decorator]
+    @cached_property
+    def endpoint(self) -> str:
+        name=re.sub(r'[^a-z0-9-]', '-', self.name)
+        return f"http://{name}:{self._port}/v1"
 
 
 class ExternalService(GenericServiceConfig):
