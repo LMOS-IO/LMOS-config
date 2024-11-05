@@ -2,7 +2,9 @@ from typing import List, Optional
 from pydantic import BaseModel, AnyUrl, ConfigDict, Field
 
 from .llm_runner import LLM_RUNNERS
-from .generic.service import ExternalService
+from .tts_runner import TTS_RUNNERS
+from .stt_runner import STT_RUNNERS
+from .rerank_runner import RERANK_RUNNERS
 
 
 # Define the model for the internal configuration assets
@@ -70,38 +72,13 @@ class RouterConfig(BaseModel):
     """
 
     log_request_dump_max_queue_size: int = Field(
-        1000,
+        default=1000,
         description="In number of entries: Threshold for worker to insert usage logs into RDB",
     )
     log_request_dump_queue_timeout: int = Field(
-        1000, description="In Seconds: The max time between worker inserting into RDB"
+        default=1000,
+        description="In Seconds: The max time between worker inserting into RDB",
     )
-
-
-# Define specific service configurations that can inherit from GenericServiceConfig
-class STTRunnerConfig(ExternalService):
-    """
-    Configuration for STT runner services.
-    """
-
-    pass
-
-
-class TTSRunnerConfig(ExternalService):
-    """
-    Configuration for TTS runner services.
-    """
-
-    pass
-
-
-class ReRankRunnerConfig(ExternalService):
-    """
-    Configuration for re-ranker services.
-    """
-
-    pass
-
 
 class Services(BaseModel):
     """
@@ -115,13 +92,13 @@ class Services(BaseModel):
     llm_runner: List[LLM_RUNNERS] = Field(
         default_factory=list, description="List of LLM runner services"
     )
-    stt_runner: List[STTRunnerConfig] = Field(
+    stt_runner: List[STT_RUNNERS] = Field(
         default_factory=list, description="List of STT runner services"
     )
-    tts_runner: List[TTSRunnerConfig] = Field(
+    tts_runner: List[TTS_RUNNERS] = Field(
         default_factory=list, description="List of TTS runner services"
     )
-    rerank_runner: List[ReRankRunnerConfig] = Field(
+    rerank_runner: List[RERANK_RUNNERS] = Field(
         default_factory=list, description="List of re-ranker services"
     )
 
