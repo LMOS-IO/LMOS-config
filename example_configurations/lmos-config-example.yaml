@@ -24,14 +24,14 @@ services:
   llm_runner: # Defining all llm_runner services on the network
     - name: llama-3.1-70b # config for a single llm_runner container
       type: vllm # what inference service is deploying the model
-      location: /your/path/to/model_folder # local file path or hf repo
+      model: /your/path/to/model_folder # local file path or hf repo
       alias: # model name(s) that map to this model when the client makes a request
         - llama-3.1-70b
         - llama-3.1-70b-2
 
     - name: hermes-3.1-70b # config for a second llm_runner container
       type: exl2
-      location: /your/path/to/model_folder
+      model: /your/path/to/model_folder
       alias:
         - hermes-3.1-70b
         - hermes-3.1-70b-2
@@ -39,20 +39,24 @@ services:
 
   stt_runner: # Defining all stt_runner services on the network
     - name: whisper-large-en
-      location: /your/path/to/model_folder # local file path or hf repo
+      type: external
+      endpoint: example.com:8080 # local file path or hf repo
+      api_key: examplekey
       alias: # model name(s) that map to this model when the client makes a request
         - whisper
 
   tts_runner: # Defining all tts_runner services on the network
     - name: XTTS-v2
-      type: coqui_runner # Type of backend to run the tts model (prob link to breakout docs)
-      location: /your/path/to/model_folder # local file path or hf repo
+      type: external # Type of backend to run the tts model (prob link to breakout docs)
+      endpoint: example.com:8080 # local file path or hf repo
+      api_key: examplekey
       alias:
         - XTTS-v2
 
   rerank_runner: # Defining all reranking services on the network
     - name: reranker
-      type: some-reraker-structure # Type of backend for the reranker model you choose
-      location: /your/path/to/model_folder # local file path or hf repo
+      type: external # Type of backend for the reranker model you choose
+      endpoint: example.com:8080 # local file path or hf repo
+      api_key: examplekey
       alias:
         - reranker
