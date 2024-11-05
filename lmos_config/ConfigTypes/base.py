@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 from pydantic import BaseModel, ConfigDict, Field
 
 from .internal_services import InternalConfiguration
@@ -17,16 +17,16 @@ class Services(BaseModel):
         default_factory=lambda: RouterConfig(),
         description="Configuration for the LMOS Router",
     )
-    llm_runner: List[LLM_RUNNERS] = Field(
+    llm_runner: Optional[List[LLM_RUNNERS]] = Field(
         default_factory=list, description="List of LLM runner services"
     )
-    stt_runner: List[STT_RUNNERS] = Field(
+    stt_runner: Optional[List[STT_RUNNERS]] = Field(
         default_factory=list, description="List of STT runner services"
     )
-    tts_runner: List[TTS_RUNNERS] = Field(
+    tts_runner: Optional[List[TTS_RUNNERS]] = Field(
         default_factory=list, description="List of TTS runner services"
     )
-    rerank_runner: List[RERANK_RUNNERS] = Field(
+    rerank_runner: Optional[List[RERANK_RUNNERS]] = Field(
         default_factory=list, description="List of re-ranker services"
     )
 
