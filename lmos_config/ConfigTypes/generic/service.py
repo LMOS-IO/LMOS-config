@@ -26,7 +26,8 @@ class InternalService(GenericServiceConfig):
     @computed_field # type: ignore[prop-decorator]
     @cached_property
     def endpoint(self) -> str:
-        name=re.sub(r'[^a-z0-9-]', '-', self.name)
+        name = self.name.lower()
+        name=re.sub(r'[^a-z0-9-]', '-', name)
         return f"http://{name}:{self._port}/v1"
 
 
