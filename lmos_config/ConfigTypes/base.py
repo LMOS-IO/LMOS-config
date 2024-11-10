@@ -3,6 +3,7 @@ from pydantic import BaseModel, ConfigDict, Field
 
 from .internal_services import InternalConfiguration
 from .router import RouterConfig
+from .auth import AuthConfig
 from .llm_runner import LLM_RUNNERS
 from .tts_runner import TTS_RUNNERS
 from .stt_runner import STT_RUNNERS
@@ -44,6 +45,9 @@ class LMOSBaseConfigModel(BaseModel):
 
     internal_configuration: InternalConfiguration = Field(
         ..., description="Internal configuration for assets"
+    )
+    auth: AuthConfig = Field(
+        default_factory=lambda: AuthConfig()
     )
     services: Services = Field(
         ..., description="Service configurations"
