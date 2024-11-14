@@ -114,7 +114,7 @@ class vLLMArgs(BaseModel):
     model_config  = ConfigDict(protected_namespaces=())
 
 class vLLMRunner(InternalService, vLLMArgs):
-    """ExllamaV2 runner config"""
+    """vLLM runner config"""
 
     type: Literal["vllm"]
     _port: int = 8000
